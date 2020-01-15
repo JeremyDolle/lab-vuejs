@@ -2,7 +2,7 @@
   <div id="app" class="container">
 
     <!-- DATA BINDING -->
-    <template>
+    <template v-if="true">
       <h3>DATA BINDING</h3>
       <div class="alert alert-success">{{ alert.message }}</div>
       <div :class="['alert', alert.customClass]">{{ alert.message }}</div>
@@ -48,6 +48,9 @@
       <template>
         <h4>V FOR</h4>
         <ul>
+          <template v-for="{ id, name } in persons" >
+            <li :key="id" >{{ name }}</li>
+          </template>
           <li v-for="{ id, name } in persons" :key="id">{{ name }}</li>
         </ul>
       </template>
@@ -102,12 +105,9 @@
 
       <Modal :showModal="showModal" @onClose="showModal = false">
         <h2 slot="modal-header" class="text-left">This is my awesome modal</h2>
-        <div slot="modal-container">
-          <input type="text" placeholder="email">
-          <input type="text" placeholder="password">
-        </div>
         <button slot="modal-footer" class="btn btn-primary">Log in</button>
       </Modal>
+
       <div class="separator"></div>
     </template>
 
@@ -120,23 +120,30 @@
       <router-link to="page2">
         <button class="btn btn-primary">Page 2</button>
       </router-link>
-      <div>
+      <div class="render">
         <router-view />
       </div>
     </template>
+    <div class="separator"></div>
+
+    <button @click="() => openPage2()">Show Visible</button>
+    <Simple :visible="show" @close="show = false"/>
   </div>
 </template>
 
 <script>
 import Modal from './components/Modal'
+import Simple from './components/Simple'
 
 export default {
   name: 'app',
   components: {
+    Simple,
     Modal,
   },
   data () {
     return {
+      show: false,
       alert: {
         success: true,
         message: 'Hello World !',
@@ -169,6 +176,9 @@ export default {
     },
   },
   methods: {
+    openPage2 () {
+      this.$router.push('/page2')
+    },
     showReverseMessage () {
       console.log('updated')
       return this.messageToReverse.split('').reverse().join('')

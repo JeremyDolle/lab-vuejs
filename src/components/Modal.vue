@@ -6,10 +6,14 @@
                 <slot name="modal-header"></slot>
             </div>
             <div class="modal-container">
-                <slot name="modal-container"></slot>
+                <slot name="modal-container">
+                    My Content
+                </slot>
             </div>
             <div class="modal-footer">
-                <slot name="modal-footer"></slot>
+                <slot name="modal-footer">
+
+                </slot>
             </div>
         </div>
     </div>
